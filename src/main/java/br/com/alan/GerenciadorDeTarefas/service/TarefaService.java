@@ -11,6 +11,7 @@ import br.com.alan.GerenciadorDeTarefas.mapper.TarefaMapper;
 import br.com.alan.GerenciadorDeTarefas.mapper.UsuarioMapper;
 import br.com.alan.GerenciadorDeTarefas.repository.TarefaRepository;
 import br.com.alan.GerenciadorDeTarefas.repository.UsuarioRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -66,4 +67,33 @@ public class TarefaService {
 
         return TarefaMapper.toTarefaResponse(tarefa);
     }
+
+    public TarefaDTO iniciarTarefa(Long id, String login){
+        Optional<Tarefa> optTarefa = tarefaRepository.findById(id);
+
+        if (optTarefa.isEmpty()){
+            throw new IllegalArgumentException("Tarefa não encontrada!");
+        }
+        Tarefa tarefa = optTarefa.get();
+        validarLoginUsuario(login, UsuarioMapper.toUsuarioDTO(tarefa.getUsuario()));
+        tarefa.iniciarTarefa();
+        tarefaRepository.save(tarefa);
+        return TarefaMapper.toTarefaResponse(tarefa);
+    }
+
+    public TarefaDTO finalizarTarefa(Long id, String login){
+        Optional<Tarefa> optTarefa = tarefaRepository.findById(id);
+
+        if (optTarefa.isEmpty()){
+            throw new IllegalArgumentException("Tarefa não encontrada!");
+        }
+        Tarefa tarefa = optTarefa.get();
+        validarLoginUsuario(login, UsuarioMapper.toUsuarioDTO(tarefa.getUsuario()));
+        tarefa.finalizarTarefa();
+        tarefaRepository.save(tarefa);
+        return TarefaMapper.toTarefaResponse(tarefa);
+
+    }
+
+
 }

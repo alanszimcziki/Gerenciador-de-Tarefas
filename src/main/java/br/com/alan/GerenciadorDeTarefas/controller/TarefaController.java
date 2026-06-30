@@ -35,5 +35,23 @@ public class TarefaController {
         TarefaDTO dto = tarefaService.listarTarefaPorID(login, id);
         return ResponseEntity.ok(dto);
     }
+    @PatchMapping("/inicia/{id}")
+    public ResponseEntity<TarefaDTO> iniciarTarefa(@PathVariable Long id,
+            Authentication auth) {
+
+        String login = ControllerUtils.obterLogin(auth);
+        TarefaDTO dto = tarefaService.iniciarTarefa(id, login);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/finalizar/{id}")
+    public ResponseEntity<TarefaDTO> finalizarTarefa(@PathVariable Long id,
+                                                     Authentication auth) {
+
+        String login = ControllerUtils.obterLogin(auth);
+        TarefaDTO dto = tarefaService.finalizarTarefa(id,login);
+        return ResponseEntity.ok(dto);
+
+    }
 
 }

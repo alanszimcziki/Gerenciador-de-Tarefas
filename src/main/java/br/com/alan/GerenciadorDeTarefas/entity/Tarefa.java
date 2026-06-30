@@ -40,5 +40,23 @@ public class Tarefa {
 
 
 
+    public void iniciarTarefa(){
+        if (this.statusTarefa != StatusTarefa.PENDENTE){
+            throw new IllegalArgumentException("Só é possível iniciar uma tarefa que já esteja pendente: " + this.statusTarefa);
+        }
+        this.statusTarefa = StatusTarefa.ANDAMENTO;
+    }
+
+    public void finalizarTarefa(){
+        if (this.statusTarefa != StatusTarefa.ANDAMENTO){
+            throw new IllegalArgumentException("Só é possível finalizar uma tarefa que já esteja em andamento: " + this.statusTarefa);
+        }
+        this.statusTarefa = StatusTarefa.CONCLUIDA;
+    }
+
+
+
+
+
 
 }
