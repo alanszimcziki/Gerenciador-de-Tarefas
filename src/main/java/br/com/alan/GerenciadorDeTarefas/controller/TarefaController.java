@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tarefa")
 public class TarefaController {
@@ -35,7 +37,15 @@ public class TarefaController {
         TarefaDTO dto = tarefaService.listarTarefaPorID(login, id);
         return ResponseEntity.ok(dto);
     }
-    @PatchMapping("/inicia/{id}")
+
+    @GetMapping
+    public ResponseEntity<List<TarefaDTO>> listarTarefaPorNome(Authentication auth){
+        String login = ControllerUtils.obterLogin(auth);
+        List<TarefaDTO> dto = tarefaService.listarTarefas(login);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PatchMapping("/iniciar/{id}")
     public ResponseEntity<TarefaDTO> iniciarTarefa(@PathVariable Long id,
             Authentication auth) {
 

@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,6 +67,17 @@ public class TarefaService {
         validarLoginUsuario(login, UsuarioMapper.toUsuarioDTO(tarefa.getUsuario()));
 
         return TarefaMapper.toTarefaResponse(tarefa);
+    }
+
+    //todo: findByUsuario faz busca das suas tarefas no banco, o findall não é inficado usar aqui, além de trazer dados
+    // dos outros usuários, você vai criar uma lógica desnecessária na aplicação usando o filter para buscar com o seu e-mail.
+    public List<TarefaDTO> listarTarefas(String login){
+       Usuario usuario = usuarioRepository.findUsuarioByEmail(login)
+               .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
+
+       List<Tarefa> tarefas = tarefaRepository.findByUsuario(usuario);
+       return TarefaMapper.toTarefaResponse(tarefas);
+
     }
 
     public TarefaDTO iniciarTarefa(Long id, String login){
