@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +17,7 @@ public class ProjetoDTO {
     private String nomeProjeto;
     private String descricao;
     private UsuarioDTO usuario;
+    private List<TarefaDTO> tarefas;
 
 
 
