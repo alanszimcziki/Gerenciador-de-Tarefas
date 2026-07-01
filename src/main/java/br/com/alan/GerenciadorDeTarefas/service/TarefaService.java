@@ -11,7 +11,6 @@ import br.com.alan.GerenciadorDeTarefas.mapper.TarefaMapper;
 import br.com.alan.GerenciadorDeTarefas.mapper.UsuarioMapper;
 import br.com.alan.GerenciadorDeTarefas.repository.TarefaRepository;
 import br.com.alan.GerenciadorDeTarefas.repository.UsuarioRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -71,19 +70,19 @@ public class TarefaService {
 
     //todo: findByUsuario faz busca das suas tarefas no banco, o findall não é inficado usar aqui, além de trazer dados
     // dos outros usuários, você vai criar uma lógica desnecessária na aplicação usando o filter para buscar com o seu e-mail.
-    public List<TarefaDTO> listarTarefas(String login){
-       Usuario usuario = usuarioRepository.findUsuarioByEmail(login)
-               .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
+    public List<TarefaDTO> listarTarefas(String login) {
+        Usuario usuario = usuarioRepository.findUsuarioByEmail(login)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
 
-       List<Tarefa> tarefas = tarefaRepository.findByUsuario(usuario);
-       return TarefaMapper.toTarefaResponse(tarefas);
+        List<Tarefa> tarefas = tarefaRepository.findByUsuario(usuario);
+        return TarefaMapper.toTarefaResponse(tarefas);
 
     }
 
-    public TarefaDTO iniciarTarefa(Long id, String login){
+    public TarefaDTO iniciarTarefa(Long id, String login) {
         Optional<Tarefa> optTarefa = tarefaRepository.findById(id);
 
-        if (optTarefa.isEmpty()){
+        if (optTarefa.isEmpty()) {
             throw new IllegalArgumentException("Tarefa não encontrada!");
         }
         Tarefa tarefa = optTarefa.get();
@@ -93,10 +92,10 @@ public class TarefaService {
         return TarefaMapper.toTarefaResponse(tarefa);
     }
 
-    public TarefaDTO finalizarTarefa(Long id, String login){
+    public TarefaDTO finalizarTarefa(Long id, String login) {
         Optional<Tarefa> optTarefa = tarefaRepository.findById(id);
 
-        if (optTarefa.isEmpty()){
+        if (optTarefa.isEmpty()) {
             throw new IllegalArgumentException("Tarefa não encontrada!");
         }
         Tarefa tarefa = optTarefa.get();
