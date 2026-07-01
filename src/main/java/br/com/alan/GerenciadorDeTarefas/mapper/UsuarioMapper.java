@@ -15,6 +15,13 @@ public class UsuarioMapper {
                 .build();
     }
 
+    public static Usuario toUsuario(UsuarioDTO usuarioDTO){
+        return Usuario.builder()
+                .id(usuarioDTO.getId())
+                .email(usuarioDTO.getEmail())
+                .build();
+    }
+
     public static UsuarioResponse toUsuarioResponse(Usuario usuario){
         return UsuarioResponse.builder()
                 .id(usuario.getId())
